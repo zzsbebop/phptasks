@@ -1,4 +1,9 @@
 <?php
+/*Дан массив с вопросами и правильными ответами. Реализуйте тест: выведите на экран все вопросы, под каждым инпут.
+Пользователь читает вопрос, пишет свой ответ в инпут. Когда вопросы заканчиваются - он жмет на кнопку, страница
+обновляется и вместо инпутов под вопросами появляется сообщение вида: 'ваш ответ: ... верно!' или 'ваш ответ: ... неверно!
+Правильный ответ: ...'. Правильно отвеченные вопросы должны гореть зеленым цветом, а неправильно - красным.*/
+
 $questions = [
   'Назовите столицу Англии?' => 'Лондон',
   'Какого цвета томат?' => 'Красный',
@@ -19,12 +24,12 @@ $questions = [
 
       <p><?= $key; ?></p>
 
-<form action="form_single.php" method="POST">
+<form action="form_input.php" method="POST">
     <input type="text" name="answer<?= $counter;?>" placeholder="Введите ответ">
 
   <?php $counter++;?>
   <?php endforeach;?>
-  <input type="submit" value="Отправить">
+  <input type="submit" name="submit" value="Отправить">
 </form>
 
 <?php endif; ?>
@@ -32,18 +37,14 @@ $questions = [
 </html>
 
 <?php
-$data = ['answer1' => 'Лондон',
-          'answer2' => 'Красный',
-          'answer3' => '12',
-          'answer4' => 'Ширли',
-  ];
-if (!empty($_POST))  {
+
+if (isset($_POST['submit']))  {
   $counter = 1;
   foreach ($questions as $question => $val) {
     echo $question;
-    $answer = $_POST['answer' . $counter];
+    $answer = $_POST['answer' . $counter] ?? '';
     if ($answer == $val) {
-      echo "<p style=\"color:forestgreen;\">Ваш ответ \"$val\" верный</p><br/>";
+      echo "<p style=\"color:forestgreen;\">Ответ \"$val\" верный</p><br/>";
     } else {
       echo "<p style=\"color:red;\">Ответ \"$answer\" НЕ верный.</p><br/>";
     }
