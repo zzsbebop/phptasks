@@ -42,5 +42,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 echo "<br/>";
 echo "<a href=\"$_SERVER[SCRIPT_NAME]\">Вернуться к форме</a>";
-var_dump($_POST['number']);
+
 
