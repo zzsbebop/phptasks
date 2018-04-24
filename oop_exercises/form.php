@@ -4,39 +4,83 @@
  * Form builder
  */
 
-class Form {
+class Form
+{
 
-  public function open($params) {
+  /**
+   * @param $params
+   * @throws
+   * @return string
+   */
+  public function open($params): string {
     $action = $params['action'] ?? "";
-    $method = $params['method'] ?? null;
+    if (! ($params['method'] == 'POST' || $params['method'] == 'GET'))  {
+      throw new Exception("Необходимо указать Method");
+    }
+    $method = $params['method'];
+
     return "<form action=\"$action\" method=\"$method\"><br />";
   }
 
-  public function close () {
+  /**
+   * @return string
+   */
+  public function close (): string {
     return "</form><br />";
   }
 
-  public function input ($params) {
-    $type = $params['type'] ?? null;
-    $name = $params['name'] ?? null;
+  /**
+   * @param $params
+   * @throws
+   * @return string
+   */
+  public function input ($params): string {
+    if (empty($params['type'])) {
+      throw new Exception("Необходимо указать Type");
+    }
+    $type = $params['type'];
+    if (empty($params['name'])) {
+      throw new Exception("Необходимо указать Name");
+    }
+    $name = $params['name'];
     $placeholder = $params['placeholder'] ?? 'Enter Text';
 
     return "<input type=\"$type\" name=\"$name\" placeholder=\"$placeholder\" value=\"\"><br />";
   }
 
-  public function password ($params) {
-    $placeholder = $params['placeholder'] ?? 'password';
-    $name = $params['name'] ?? null;
+  /**
+   * @param $params
+   * @throws
+   * @return string
+   */
+  public function password ($params): string {
+    $placeholder = $params['placeholder'] ?? 'enter password';
+    if (empty($params['name'])) {
+      throw new Exception("Необходимо указать Name");
+    }
+    $name = $params['name'];
+
     return "<input type=\"password\" placeholder=\"$placeholder\" name=\"$name\"><br />";
   }
 
-  public function textarea ($params) {
-    $placeholder = $params['placeholder'] ?? null;
+  /**
+   * @param $params
+   *
+   * @return string
+   */
+  public function textarea ($params): string {
+
+    $placeholder = $params['placeholder'] ?? 'Enter Text';
     $name = $params['name'] ?? 'textarea';
     return "<textarea name=\"$name\" placeholder=\"$placeholder\"></textarea><br />";
   }
 
-  public function submit ($params) {
+  /**
+   * @param $params
+   *
+   * @return string
+   */
+  public function submit ($params): string {
     $value = $params['value'] ?? 'Отправить';
     return "<input type=\"submit\" value=\"$value\"><br />";
   }

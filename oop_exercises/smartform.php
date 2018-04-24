@@ -5,9 +5,12 @@
  *
  */
 
+class SmartForm extends Form
+{
 
-class SmartForm extends Form {
-
+  /**
+   * @var array
+   */
   private $input = [];
 
   /**
@@ -24,17 +27,33 @@ class SmartForm extends Form {
     $this->input = $input;
   }
 
-  public function input ($params) {
-    $type = $params['type'] ?? null;
-    $name = $params['name'] ?? null;
+  /**
+   * @param $params
+   * @throws
+   * @return string
+   */
+  public function input ($params): string {
+    if (empty($params['type'])) {
+      throw new Exception("Необходимо указать Type");
+    }
+    $type = $params['type'];
+    if (empty($params['name'])) {
+      throw new Exception("Необходимо указать Name");
+    }
+    $name = $params['name'];
     $placeholder = $params['placeholder'] ?? 'Enter Text';
     $value = $this->input['input'] ?? null;
 
     return "<input type=\"$type\" name=\"$name\" placeholder=\"$placeholder\" value=\"$value\"><br />";
   }
 
-  public function textarea ($params) {
-    $placeholder = $params['placeholder'] ?? null;
+  /**
+   * @param $params
+   *
+   * @return string
+   */
+  public function textarea ($params): string {
+    $placeholder = $params['placeholder'] ?? 'Textarea';
     $name = $params['name'] ?? 'textarea';
     $value = $this->input['message'] ?? null;
 
@@ -44,7 +63,7 @@ class SmartForm extends Form {
   /**
    * @param $rawdata
    */
-  public function processInput($rawdata) {
+  public function processInput($rawdata): void {
     if (!empty($rawdata)) {
       foreach ($rawdata as $key => $value) {
         $this->input[$key] = $value;
