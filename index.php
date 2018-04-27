@@ -1,44 +1,17 @@
 <?php
 
-require_once 'oop_exercises/form.php';
-require_once 'oop_exercises/smartform.php';
+require_once 'oop_exercises/mycookie.php';
 
-$smartform = new SmartForm();
+$time = 60*60*24;
+$mycookie = new MyCookie($time);
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-  try {
-    echo $smartform->open(['action' => 'index.php', 'method' => 'POST']);
-  } catch (Throwable $t) {
-    echo $t->getMessage();
-  }
-  try {
-    echo $smartform->input(['name' => 'input', 'type' => 'text', 'placeholder' => 'Dummy Text']);
-  } catch (Throwable $t) {
-    echo $t->getMessage();
-  }
-  echo $smartform->textarea(['name' => 'message', 'placeholder' => 'Dummy Text']);
-  echo $smartform->submit(['value' => 'Send']);
-  echo $smartform->close();
+$mycookie->setMyCookie('lang', 'ua');
+
+if (isset($_COOKIE['lang'])) {
+  $mycookie->delMyCookie('lang');
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $smartform->processInput($_POST);
-  try {
-    echo $smartform->open(['action' => 'index.php', 'method' => 'POST']);
-  } catch (Throwable $t) {
-    echo $t->getMessage();
-  }
-  try {
-    echo $smartform->input(['name' => 'input', 'type' => 'text', 'placeholder' => 'Dummy Text']);
-  } catch (Throwable $t) {
-    echo $t->getMessage();
-  }
-  echo $smartform->textarea(['name' => 'message', 'placeholder' => 'Dummy Text']);
-  echo $smartform->submit(['value' => 'Send']);
-  echo $smartform->close();
-  echo 'Форма отправлена.';
-}
-
+echo 'Cookie: ' . $mycookie->getMyCookie('lang');
 
 
 
