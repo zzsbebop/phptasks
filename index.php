@@ -1,17 +1,14 @@
 <?php
 
-require_once 'oop_exercises/mycookie.php';
+require_once 'oop_exercises/mysession.php';
 
-$time = 60*60*24;
-$mycookie = new MyCookie($time);
+$sess = new MySession();
+$sess->create('sessID', '999');
+$sess->create('usrID', '0023');
+$sess->delete('usrID');
+echo $sess->get('sessID');
 
-$mycookie->setMyCookie('lang', 'ua');
-
-if (isset($_COOKIE['lang'])) {
-  $mycookie->delMyCookie('lang');
-}
-
-echo 'Cookie: ' . $mycookie->getMyCookie('lang');
+print_r ($_SESSION);
 
 
 
