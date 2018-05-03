@@ -30,13 +30,13 @@ class MySession
   }
 
   /**
-   * @param $var
+   * @param $name
    *
    * @return string
    */
-  public function get($var) {
-    if ($this->check($var)) {
-      return $_SESSION[$var];
+  public function get($name) {
+    if ($this->check($name)) {
+      return $_SESSION[$name];
     } else {
       return 'index not found';
     }
